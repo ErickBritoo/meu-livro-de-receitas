@@ -1,0 +1,44 @@
+name: CI
+
+on: 
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build:
+    name: Build and Analyze
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+          
+      - name: Instalar SonarScanner
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Sonar Begin
+        run: |
+          dotnet sonarscanner begin \
+          /k:"ErickBritoo_meu-livro-de-receitas" \
+          /o:"erickbritoo" \
+          /d:sonar.login="${{ secrets.SONAR_TOKEN }}" \
+          /d:sonar.host.url="https://sonarcloud.io"
+
+      - name: Build
+        run: dotnet build --no-restore
+  
+      - name: Testes
+        run: dotnet test --no-build --verbosity normal
+  
+      - name: Sonar End
+        run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+          
