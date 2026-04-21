@@ -33,8 +33,11 @@ jobs:
           /d:sonar.login="${{ secrets.SONAR_TOKEN }}" \
           /d:sonar.host.url="https://sonarcloud.io"
 
+      - name: Restore dependencies
+        run: dotnet restore
+      
       - name: Build
-        run: dotnet build --no-restore
+        run: dotnet build
   
       - name: Testes
         run: dotnet test --no-build --verbosity normal
