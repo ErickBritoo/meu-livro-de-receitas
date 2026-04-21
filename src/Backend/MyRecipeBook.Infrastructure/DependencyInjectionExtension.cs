@@ -24,7 +24,6 @@ public static class DependencyInjectionExtension
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
     {
-        const string connectionString = "server=localhost;port=3306;uid=root;pwd=Erickdan456!;database=meulivrodereceitas";
         var connectionString = configuration.ConnectionString();
         
         var serverVersion = new MySqlServerVersion(ServerVersion.AutoDetect(connectionString));
