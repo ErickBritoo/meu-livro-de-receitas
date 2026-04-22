@@ -15,7 +15,7 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(); 
 
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddAplication();
+builder.Services.AddAplication(builder.Configuration);
 
 builder.Services.AddMvc(options => options.Filters.Add((typeof(ExceptionFilter))));
 
@@ -48,9 +48,6 @@ return;
 
 void MigrateDatabase()
 {
-    if (builder.Configuration.IsUnitTestEnviroment())
-        return;
-    
     var connectionString = builder.Configuration.ConnectionString();
 
     var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
