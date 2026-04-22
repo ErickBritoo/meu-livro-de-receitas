@@ -4,9 +4,8 @@ namespace MyRecipeBook.API.Middlewares;
 
 public class CultureMiddleware(RequestDelegate next)
 {
-    private RequestDelegate _next = next;
-
-
+    private readonly RequestDelegate _next = next;
+    
     public async Task InvokeAsync(HttpContext context)
     {
         var supportedCultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
