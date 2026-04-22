@@ -4,6 +4,8 @@ using MyRecipeBook.Application;
 using Scalar.AspNetCore;
 using MyRecipeBook.Infrastructure;
 using MyRecipeBook.Application.Services.Mapster;
+using MyRecipeBook.Infrastructure.Extensions;
+using MyRecipeBook.Infrastructure.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,4 +40,25 @@ app.UseMiddleware<CultureMiddleware>();
 
 app.MapControllers();
 
-app.Run();
+MigrateDatabase();
+
+await app.RunAsync();
+
+return;
+
+void MigrateDatabase()
+{
+    if (builder.Configuration.IsUnitTestEnviroment())
+        return;
+    
+    var connectionString = builder.Configuration.ConnectionString();
+
+    var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+    
+    DatabaseMigration.Migrate(connectionString, serviceScope.ServiceProvider);
+}
+
+public partial class Program
+{
+    protected Program() {}
+}
