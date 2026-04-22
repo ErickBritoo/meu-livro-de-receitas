@@ -2,7 +2,7 @@ using Mapster;
 using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Domain.Entities;
 
-namespace MyRecipeBook.Application.MapsterConfig;
+namespace MyRecipeBook.Application.MapsterConfigs;
 
 public class UserMappingConfig : IRegister
 {
