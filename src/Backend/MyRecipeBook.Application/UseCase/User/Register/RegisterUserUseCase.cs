@@ -37,7 +37,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         await Validate(request);
 
         var user = request.Adapt<Domain.Entities.User>();
-
+        
         user.Password = _passwordEncripter.Encrypt(request.Password);
 
         await _writeOnlyRepository.Add(user);
@@ -53,7 +53,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     private async Task Validate(RequestRegisterUserJson request)
     {
         var validator = new RegisterUserValidation();
-        var result = validator.Validate(request);
+        var result = await validator.ValidateAsync(request);
 
         if (await _readOnlyRepository.ExistActiveUserWithEmail(request.Email))
             result.Errors.Add(new ValidationFailure(string.Empty, ResourceMessagesException.EMAIL_ALREADY_REGISTERED));
