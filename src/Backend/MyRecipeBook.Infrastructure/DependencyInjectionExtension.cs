@@ -1,3 +1,5 @@
+using System.Reflection;
+using FluentMigrator.Runner;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,7 @@ public static class DependencyInjectionExtension
     {
         AddRepositories(services);
         AddDbContext(services, configuration);
+        AddFluentMigrator_MySql(services, configuration);
     }
 
     private static void AddRepositories(IServiceCollection services)
@@ -32,6 +35,19 @@ public static class DependencyInjectionExtension
         services.AddDbContext<MyRecipeBookDbContext>(options =>
         {
             options.UseMySql(connectionString, serverVersion);
+        });
+    }
+    
+    private static void AddFluentMigrator_MySql(IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.ConnectionString();
+
+        services.AddFluentMigratorCore().ConfigureRunner(options =>
+        {
+            options
+                .AddMySql5()
+                .WithGlobalConnectionString(connectionString)
+                .ScanIn(Assembly.Load("MyRecipeBook.Infrastructure")).For.All();
         });
     }
 }
