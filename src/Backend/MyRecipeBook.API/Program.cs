@@ -15,7 +15,7 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(); 
 
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddAplication(builder.Configuration);
+builder.Services.AddApplication(builder.Configuration);
 
 builder.Services.AddMvc(options => options.Filters.Add((typeof(ExceptionFilter))));
 
