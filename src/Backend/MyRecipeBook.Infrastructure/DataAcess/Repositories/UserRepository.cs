@@ -7,7 +7,7 @@ namespace MyRecipeBook.Infrastructure.DataAcess.Repositories;
 public class UserRepository : IUserReadOnlyRepository, IUserWriteOnlyRepository
 {
     private readonly MyRecipeBookDbContext _context;
-    
+
     public UserRepository(MyRecipeBookDbContext context)
     {
         _context = context;
@@ -19,5 +19,10 @@ public class UserRepository : IUserReadOnlyRepository, IUserWriteOnlyRepository
     {
         return await _context.Users.AnyAsync(u => u.Email.Equals(email) && u.Active);
     }
-    
+
+    public async Task<User?> GetByEmailAndPassword(string email, string password)
+    {
+        return await _context.Users.AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Active && u.Email == email && u.Password == password);
+    }
 }
