@@ -32,4 +32,7 @@
     <data name="EMAIL_ALREADY_REGISTERED" xml:space="preserve">
         <value>O email fornecido já foi registado por um utilizador</value>
     </data>
+    <data name="EMAIL_OR_PASSWORD_INVALID" xml:space="preserve">
+        <value>E-mail e/ou palavra-passe inválidos.</value>
+    </data>
 </root>

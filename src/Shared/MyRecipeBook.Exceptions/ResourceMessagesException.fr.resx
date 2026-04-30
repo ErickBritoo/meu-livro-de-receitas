@@ -34,4 +34,7 @@
     <data name="EMAIL_ALREADY_REGISTERED" xml:space="preserve">
         <value>L'adresse e-mail fournie a déjà été enregistrée par un utilisateur.</value>
     </data>
+    <data name="EMAIL_OR_PASSWORD_INVALID" xml:space="preserve">
+        <value>L'email et/ou le mot de passe ne sont pas valides.</value>
+    </data>
 </root>
