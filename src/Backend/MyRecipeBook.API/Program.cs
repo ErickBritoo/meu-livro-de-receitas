@@ -21,6 +21,8 @@ builder.Services.AddMvc(options => options.Filters.Add((typeof(ExceptionFilter))
 
 MapsterConfig.Register();
 
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
